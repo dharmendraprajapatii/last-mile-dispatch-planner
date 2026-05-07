@@ -1,9 +1,11 @@
 #!/bin/bash
 
-echo "📦 Installing dependencies..."
+echo "📦 Installing composer dependencies..."
+
+composer install --no-interaction --prefer-dist
 
 echo "🔑 Generating app key..."
-php artisan key:generate
+php artisan key:generate --force
 
 echo "📁 Setting permissions..."
 chmod -R 775 storage bootstrap/cache
@@ -28,10 +30,7 @@ php artisan config:clear
 php artisan cache:clear
 
 echo "🚀 Running migrations..."
-php artisan migrate --force -vvv
-
-# Optional:
-# php artisan db:seed --force
+php artisan migrate --force
 
 echo "⏰ Starting scheduler..."
 php artisan schedule:work &

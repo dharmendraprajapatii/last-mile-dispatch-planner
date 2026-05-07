@@ -1,6 +1,6 @@
 FROM php:8.4-cli
 
-# Install dependencies
+# Install system packages
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -18,14 +18,9 @@ WORKDIR /var/www
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Copy FULL project first
 COPY . .
 
-# Install dependencies
-RUN composer install --no-interaction --prefer-dist
-
-# Fix permissions
-RUN chmod -R 775 storage bootstrap/cache
+RUN chmod +x docker/entrypoint.sh
 
 EXPOSE 8000
 
