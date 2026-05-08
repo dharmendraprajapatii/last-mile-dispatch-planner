@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build: .
@@ -43,7 +41,8 @@ services:
     working_dir: /infra
     volumes:
       - ./infra:/infra
-    command:
-      - sh
+    entrypoint:
+      - /bin/sh
       - -c
-      - sleep 10 && terraform init && terraform apply -auto-approve
+    command:
+      - "sleep 10 && terraform init && terraform apply -auto-approve"
